@@ -2,53 +2,95 @@ package com.training.bank;
 
 import java.util.Scanner;
 
-class BankAccount {
+public class BankAccount {
+    protected int accountNumber;
+    protected String accountHolder;
+    protected double balance;
 
-	public static void main(String[] args) {
-		   System.out.println("Welcome to Bank of Hassan!");
-		// Scanner sc = new Scanner(System.in);
-		// System.out.println("Enter Account Number");
-		// int accountNumber = sc.nextInt();
-		// sc.nextLine();
-		// System.out.println("Enter Name");
-		// String Name = sc.nextLine();
-		// System.out.println("Enter Rate of Investment");
-		// double roi = sc.nextDouble();
-		// System.out.println("Enter Amount for Investment");
-		// double Amount = sc.nextDouble();
-		// SavingAccount account1 = new SavingAccount(accountNumber, Name, roi, Amount);
-		// System.out.println(account1);
-		// System.out.println("Amount after Investment"+account1.calculate());
-		//
-		//
-		// SavingAccount account1 = new SavingAccount(0001,"Hassan",0.088,5000000);
-		// SavingAccount account2 = new SavingAccount(0002,"Harith",0.12,990000);
-		// SavingAccount account3 = new SavingAccount(0003,"Talal",0.054,40000);
-		// SavingAccount account4 = new SavingAccount(0004,"Salem",0.042,800000);
-		//
-		//
-		//
-		// SavingAccount[] accounts = new SavingAccount[4];
-		// accounts[0] = account1;
-		// accounts[1] = account2;
-		// accounts[2] = account3;
-		// accounts[3] = account4;
-		//
-		// SavingAccount highestAccount = accounts[0];
-		//
-		// for (int i = 1; i < accounts.length; i++) {
-		// if (accounts[i].getAmount() > highestAccount.getAmount()) {
-		// highestAccount = accounts[i];
-		// }
-		// }
-		//
-		// System.out.println("Account with the highest amount: " + highestAccount);
+    public BankAccount(int accountNumber, String accountHolder, double balance) {
+        this.accountNumber = accountNumber;
+        this.accountHolder = accountHolder;
+        this.balance = balance;
+    }
 
-Account account1 = new SavingAccount(0001,"Hassan",0.088,5000000);
+    public void deposit(double amount) {
+        if (amount > 0) {
+            balance += amount;
+            System.out.println("OMR" + amount + " deposited. New Balance: OMR " + balance);
+        } else {
+            System.out.println("Invalid deposit amount.");
+        }
+    }
 
-	}
+    public void withdraw(double amount) {
+        if (amount > 0 && amount <= balance) {
+            balance -= amount;
+            System.out.println("OMR" + amount + " withdrawn. New Balance: OMR " + balance);
+        } else {
+            System.out.println("Insufficient funds or invalid amount.");
+        }
+    }
 
+    public double getBalance() {
+        return balance;
+    }
+
+    public void displayAccountInfo() {
+        System.out.println("====================================");
+        System.out.println("Account Number: " + accountNumber);
+        System.out.println("Account Holder: " + accountHolder);
+        System.out.println("Balance: OMR " + balance);
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("Welcome to Bank of Hassan");
+        System.out.print("Enter Account Number: ");
+        int accountNumber = sc.nextInt();
+        sc.nextLine();
+
+        System.out.print("Enter Account Holder Name: ");
+        String accountHolder = sc.nextLine();
+
+        System.out.print("Enter Initial Balance: ");
+        double balance = sc.nextDouble();
+
+        System.out.print("Enter Interest Rate (in %): ");
+        double interestRate = sc.nextDouble();
+
+        SavingAccount myAccount = new SavingAccount(accountNumber, accountHolder, balance, interestRate);
+
+        int choice;
+        do {
+            System.out.println("\n===== MENU =====");
+            System.out.println("1. Deposit");
+            System.out.println("2. Withdraw");
+            System.out.println("3. Apply Interest");
+            System.out.println("4. Display Account Info");
+            System.out.println("5. Exit");
+            System.out.print("Enter your choice: ");
+            choice = sc.nextInt();
+
+            if (choice == 1) {
+                System.out.print("Enter deposit amount: ");
+                double depositAmount = sc.nextDouble();
+                myAccount.deposit(depositAmount);
+            } else if (choice == 2) {
+                System.out.print("Enter withdrawal amount: ");
+                double withdrawAmount = sc.nextDouble();
+                myAccount.withdraw(withdrawAmount);
+            } else if (choice == 3) {
+                myAccount.applyInterest();
+            } else if (choice == 4) {
+                myAccount.displayAccountInfo();
+            } else if (choice == 5) {
+                System.out.println("Thank you");
+            } else {
+                System.out.println("Invalid choice, Please try again.");
+            }
+        } while (choice != 5);
+
+        sc.close();
+    }
 }
-
-//Constructors
-//MultiThreading
