@@ -2,7 +2,7 @@ package com.training.bank;
 
 public class SavingAccount extends BankAccount {
     private double interestRate;
-    private static final double MIN_BALANCE = 1000;
+    private static final double MIN_BALANCE = 1;
 
     public SavingAccount(int accountNumber, String accountHolder, double balance, double interestRate) {
         super(accountNumber, accountHolder, balance);
